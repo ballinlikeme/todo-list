@@ -1,19 +1,45 @@
 import React from "react";
 import { BsTrash, BsCheck } from "react-icons/bs";
+import cn from "classnames";
 
 type TodoItemProps = {
   title: string;
   isCompleted: boolean;
+  todos: {
+    title: string;
+    isCompleted: boolean;
+  }[];
+  setTodos: Function;
 };
 
-export const TodoItem: React.FC<TodoItemProps> = ({ title, isCompleted }) => {
+export const TodoItem: React.FC<TodoItemProps> = ({
+  title,
+  isCompleted,
+  todos,
+  setTodos,
+}) => {
+  const todoStateChange = () => {
+    const copy = [...todos];
+    const current = copy.find((t) => t.title === title);
+    current!.isCompleted = !current!.isCompleted;
+    setTodos(copy);
+  };
+
   return (
     <li className="flex items-center justify-between mb-4 rounded-2xl bg-zinc-800 p-5 w-full ">
-      <button className="flex items-center">
-        <div className="border-2 rounded-lg border-pink-400 w-7 h-7 mr-3">
-          <BsCheck size={24} className="text-zinc-900 bg-pink-400" />
+      <button onClick={todoStateChange} className="flex items-center">
+        <div className="mr-5 border-2 border-pink-400 rounded-lg w-7 h-7">
+          {isCompleted && (
+            <BsCheck size={24} className="text-zinc-900 bg-pink-400" />
+          )}
         </div>
-        <span className="text-3xl">{title}</span>
+        <span
+          className={cn(`text-3xl`, {
+            "line-through": isCompleted,
+          })}
+        >
+          {title}
+        </span>
       </button>
       <button>
         <BsTrash
