@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AddTodo } from "./components/add-todo/AddTodo";
 import { TodoList } from "./components/todo-list/TodoList";
 
 function App() {
+  const initialValue = localStorage.getItem("todos");
   const [todos, setTodos] = useState<
     Array<{
       title: string;
       isCompleted: boolean;
     }>
-  >([]);
+  >(JSON.parse(initialValue!) || []);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   return (
     <div className="bg-zinc-900 h-screen py-10">

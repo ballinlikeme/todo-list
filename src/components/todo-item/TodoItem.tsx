@@ -27,7 +27,6 @@ export const TodoItem: React.FC<TodoItemProps> = ({
 
   const removeTodo = () => {
     const copy = [...todos];
-
     setTodos(copy.filter((t) => t.title !== title));
   };
 
