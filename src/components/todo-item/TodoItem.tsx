@@ -25,6 +25,12 @@ export const TodoItem: React.FC<TodoItemProps> = ({
     setTodos(copy);
   };
 
+  const removeTodo = () => {
+    const copy = [...todos];
+
+    setTodos(copy.filter((t) => t.title !== title));
+  };
+
   return (
     <li className="flex items-center justify-between mb-4 rounded-2xl bg-zinc-800 p-5 w-full ">
       <button onClick={todoStateChange} className="flex items-center">
@@ -41,7 +47,7 @@ export const TodoItem: React.FC<TodoItemProps> = ({
           {title}
         </span>
       </button>
-      <button>
+      <button onClick={removeTodo}>
         <BsTrash
           size={22}
           className="text-gray-600 hover:text-pink-400 ease-in transition-colors duration-300"
